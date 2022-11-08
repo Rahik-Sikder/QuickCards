@@ -8,7 +8,9 @@ import {
   CardContent,
   CardActionArea,
   Collapse,
-  Divider,
+  Slider,
+  Grid,
+  Box,
 } from "@mui/material";
 
 const Study = ({ flashcards }) => {
@@ -126,6 +128,12 @@ const Study = ({ flashcards }) => {
           Know
         </Button>
       </ButtonGroup>
+
+      <ProgressBar
+        index={index}
+        numTotal={shuffled.length}
+        numUnsure={unsureCards.length}
+      />
     </>
   );
 };
@@ -159,6 +167,32 @@ const FlashCard = (card) => {
         </Typography>
       </Collapse>
     </Card>
+  );
+};
+
+const ProgressBar = ({ index, numUnsure, numTotal }) => {
+  return (
+    <Box sx={{ width: 250, m: 5}}>
+      <Typography id="input-slider" variant="button" gutterBottom>
+        Unsure: {numUnsure}
+      </Typography>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
+          <Slider
+            value={index}
+            onChange={() => {}}
+            aria-labelledby="input-slider"
+            min={0}
+            max={numTotal}
+          />
+        </Grid>
+        <Grid item>
+          <Typography id="input-slider" variant="button" gutterBottom>
+            Left: {numTotal - index}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
