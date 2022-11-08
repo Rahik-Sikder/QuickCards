@@ -4,16 +4,26 @@ import {
   Typography,
   Container,
   Button,
-  ButtonGroup,
   TextField,
-  Card,
-  CardContent,
-  CardActionArea,
-  Collapse,
 } from "@mui/material";
 
+import Study from "./Components/Study";
+
+const useStorageState = (key, intialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || intialState
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  // console.log("Use storage state value: " + value);
+  return [value, setValue];
+};
+
 function App() {
-  const [list, setList] = React.useState("");
+  const [list, setList] = useStorageState("list", "");
   const [flashcards, setFlashcards] = React.useState([]);
   const [studying, setStudying] = React.useState(false);
 
@@ -105,62 +115,6 @@ const EditList = ({ setStudying }) => {
     <Button variant="contained" onClick={onPress}>
       Edit List
     </Button>
-  );
-};
-
-const Study = ({ flashcards }) => {
-  const shuffled = flashcards
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-
-  const [index, setIndex] = React.useState(0);
-
-  const previous = () => {
-    if(index > 0){
-      setIndex(index - 1);
-    }
-  }
-  const next = () => {
-    if(index < shuffled.length - 1){
-      setIndex(index + 1);
-    }
-  }
-
-  return (
-    <>
-      <FlashCard key={shuffled[index][0]} card={shuffled[index]} />
-
-      <ButtonGroup variant="text" aria-label="text button group" size="large">
-        <Button onClick={previous}>Previous</Button>
-        <Button onClick={next}>Next</Button>
-      </ButtonGroup>
-    </>
-  );
-};
-
-const FlashCard = (card) => {
-  const [expanded, setExpanded] = React.useState(false);
-  console.log(card.card);
-
-  const side1 = card.card[0];
-  const side2 = card.card[1];
-
-  return (
-    <Card sx={{ maxWidth: 345, m: 2 }}>
-      <CardActionArea onClick={() => setExpanded(!expanded)}>
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {side1}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Typography variant="h5" component="div" sx={{ m: 2 }}>
-          {side2}
-        </Typography>
-      </Collapse>
-    </Card>
   );
 };
 
