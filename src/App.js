@@ -5,6 +5,8 @@ import {
   Container,
   Button,
   TextField,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 
 import Study from "./Components/Study";
@@ -35,7 +37,16 @@ function App() {
       </Container>
     );
   }
+
+  const theme = createTheme({
+    palette: {
+      background: {
+      },  
+    }
+  });
+
   return (
+    <ThemeProvider theme={theme}>
     <Container maxWidth="lg" sx={{ marginTop: 10 }} align="center">
       <Title list={list} setList={setList} />
       <SetList
@@ -45,6 +56,7 @@ function App() {
         setStudying={setStudying}
       />
     </Container>
+    </ThemeProvider>
   );
 }
 

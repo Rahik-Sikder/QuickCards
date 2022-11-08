@@ -8,6 +8,7 @@ import {
   CardContent,
   CardActionArea,
   Collapse,
+  Divider,
 } from "@mui/material";
 
 const Study = ({ flashcards }) => {
@@ -20,24 +21,28 @@ const Study = ({ flashcards }) => {
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value)
   );
-  
+
   const restart = (onlyUnsure) => {
-    if(onlyUnsure){
-      setShuffled(unsureCards
-        .map((value) => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value));
+    if (onlyUnsure) {
+      setShuffled(
+        unsureCards
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value)
+      );
     } else {
-      setShuffled(flashcards
-        .map((value) => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value));
+      setShuffled(
+        flashcards
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value)
+      );
     }
 
     setIndex(0);
     setUnsureCards([]);
     setFinished(false);
-  }
+  };
 
   const [index, setIndex] = React.useState(0);
 
@@ -94,9 +99,11 @@ const Study = ({ flashcards }) => {
           <Button onClick={() => restart(false)} color="primary">
             Study All Terms
           </Button>
-          {unsureCards.length > 0 && <Button onClick={() => restart(true)} color="secondary">
-            Study Unsure
-          </Button>}
+          {unsureCards.length > 0 && (
+            <Button onClick={() => restart(true)} color="secondary">
+              Study Unsure
+            </Button>
+          )}
         </ButtonGroup>
       </>
     );
@@ -139,7 +146,14 @@ const FlashCard = (card) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+        sx={{
+          backgroundColor: "#eeeeee",
+        }}
+      >
         <Typography variant="h5" component="div" sx={{ m: 2 }}>
           {side2}
         </Typography>
