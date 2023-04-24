@@ -47,7 +47,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <Container maxWidth="lg" sx={{ marginTop: 10 }} align="center">
+    <Container maxWidth="lg" sx={{ marginTop: 10, marginBottom: 10 }} align="center">
       <Title list={list} setList={setList} />
       <SetList
         list={list}
@@ -91,10 +91,11 @@ const Title = ({ list, setList }) => {
         name="List-Editor"
         value={list}
         rows={rows}
-        onChange={(e) => setList(e.target.value)}
+        onChange={(e) => setList(e.target.value.replaceAll("	"," "))}
         multiline
         autoFocus
       />
+  
     </>
   );
 };
